@@ -61,23 +61,23 @@ const router = {
   *
   * @return
   */ 
-  delete: async function (req: any, res: any, env: any): Promise<Response>
+  delete: async function (body: any, DB: any)
   {
 //    console.log("#test.delete");
 //    console.log(req);
     const retObj = {ret: "NG", data: [], message: ''}
     try{
-      if (req) {
+      if (body) {
         const sql = `
-        DELETE FROM Customers WHERE id = ${req.id}
+        DELETE FROM todos WHERE id = ${body.id}
         `;
         //console.log(sql);
-        await env.DB.prepare(sql).run();
+        await DB.prepare(sql).run();
       }            
-      return Response.json({ret: "OK", data: req});
+      return {ret: "OK", data: body};
     } catch (e) {
       console.error(e);
-      return Response.json(retObj);
+      return retObj;
     } 
   },    
   /**

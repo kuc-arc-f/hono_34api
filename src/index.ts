@@ -23,6 +23,11 @@ app.post('/test/get', async (c) => {
     const resulte = await testRouter.get(body, c, c.env.DB);
     return c.json({ret: "OK", data: resulte});
 });
+app.post('/test/delete', async (c) => { 
+    const body = await c.req.json();
+    const resulte = await testRouter.delete(body, c.env.DB);
+    return c.json(resulte);
+});
 
 
 export default app
