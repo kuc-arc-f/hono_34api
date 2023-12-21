@@ -34,25 +34,24 @@ const router = {
   *
   * @return
   */ 
-  update: async function (req: any, res: any, env: any): Promise<Response>
+  update: async function (body, DB)
   {
   //    console.log("#test.update");
-  //    console.log(req);
     const retObj = {ret: "NG", data: [], message: ''}
     try{
-      if (req) {
+      if (body) {
         const sql = `
-        UPDATE Customers 
-        SET CompanyName = '${req.title}', ContactName='${req.body}'
-        WHERE id = ${req.id}
+        UPDATE todos 
+        SET title = '${body.title}', content='${body.content}'
+        WHERE id = ${body.id}
         `;
-        console.log(sql);
-        await env.DB.prepare(sql).run();
+console.log(sql);
+        await DB.prepare(sql).run();
       }                
-      return Response.json({ret: "OK", data: req});
+      return {ret: "OK", data: body};
     } catch (e) {
       console.error(e);
-      return Response.json(retObj);
+      return retObj;
     } 
   },
   /**
