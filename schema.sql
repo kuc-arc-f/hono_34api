@@ -109,3 +109,34 @@ CREATE TABLE "User" (
     "name" TEXT
 );
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+DROP TABLE IF EXISTS BmCategory;
+CREATE TABLE "BmCategory" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL,
+    "name" TEXT,
+    "userId" TEXT
+);
+
+DROP TABLE IF EXISTS BookMark;
+CREATE TABLE "BookMark" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL,
+    "title" TEXT,
+    "url" TEXT,
+    "bmCategoryId" INTEGER,
+    "tag" TEXT,
+    "userId" TEXT
+);
+
+DROP TABLE IF EXISTS Memo;
+CREATE TABLE "Memo" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL,
+    "title" TEXT,
+    "content" TEXT,
+    "userId" TEXT
+);
