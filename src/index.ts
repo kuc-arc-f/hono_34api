@@ -2,6 +2,7 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 //routes
 import testRouter from './routes/test';
+import todosRouter from './routes/todo';
 import bookMarkRouter from './routes/BookMark';
 //
 const app = new Hono();
@@ -65,6 +66,30 @@ app.post('/api/bookmark/delete', async (c) => {
   const body = await c.req.json();
   const resulte = await bookMarkRouter.delete(body, c.env.DB);
   return c.json(resulte);
+});
+/* todos */
+app.post('/api/todos/get_list', async (c) => { 
+  const body = await c.req.json();
+  const resulte = await todosRouter.get_list(body, c.env.DB);
+//  return c.json({ret: "OK", data: resulte});
+  return c.json(resulte);
+});
+app.post('/api/todos/create', async (c) => { 
+  const body = await c.req.json();
+  const resulte = await todosRouter.create(body, c.env.DB);
+  return c.json(resulte);
+});
+app.post('/api/todos/get', async (c) => { 
+  const body = await c.req.json();
+  const resulte = await todosRouter.get(body, c.env.DB);
+  return c.json(resulte);
+//  return c.json({ret: "OK", data: resulte});
+});
+app.post('/api/todos/delete', async (c) => { 
+  const body = await c.req.json();
+  const resulte = await todosRouter.delete(body, c.env.DB);
+  return c.json(resulte);
+//  return c.json({ret: "OK", data: resulte});
 });
 
 export default app
