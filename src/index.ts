@@ -4,11 +4,12 @@ import { cors } from 'hono/cors'
 import testRouter from './routes/test';
 import todosRouter from './routes/todo';
 import bookMarkRouter from './routes/BookMark';
+import planRouter from './routes/plan';
 //
 const app = new Hono();
 app.use("/*", cors());
 
-app.get('/', (c) => c.text('Hello Hono!'))
+app.get('/', (c) => c.text('Hello !!!'))
 
 //test
 app.post('/test/create', async (c) => { 
@@ -91,5 +92,25 @@ app.post('/api/todos/delete', async (c) => {
   return c.json(resulte);
 //  return c.json({ret: "OK", data: resulte});
 });
-
+// /plan
+app.post('/api/plan/create', async (c) => { 
+  const body = await c.req.json();
+  const resulte = await planRouter.create(body, c.env.DB);
+  return c.json(resulte);
+});
+app.post('/api/plan/get_list', async (c) => { 
+  const body = await c.req.json();
+  const resulte = await planRouter.get_list(body, c.env.DB);
+  return c.json(resulte);
+});
+app.post('/api/plan/delete', async (c) => { 
+  const body = await c.req.json();
+  const resulte = await planRouter.delete(body, c.env.DB);
+  return c.json(resulte);
+});
+app.post('/api/plan/update', async (c) => { 
+  const body = await c.req.json();
+  const resulte = await planRouter.update(body, c.env.DB);
+  return c.json(resulte);
+});
 export default app

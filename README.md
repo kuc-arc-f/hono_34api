@@ -12,7 +12,22 @@
 ### Summary
 
 hono , API  sample
+***
+### Setup
 
+* wrangler.toml
+```
+name = "hono_34api"
+compatibility_date = "2024-01-01"
+
+[vars]
+API_KEY = "123"
+
+[[d1_databases]]
+binding = "DB" # i.e. available in your Worker on env.DB
+database_name = ""
+database_id = ""
+```
 ***
 ### blog 
 

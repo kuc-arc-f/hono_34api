@@ -6,17 +6,19 @@ const router = {
   *
   * @return
   */
-  create: async function (req: any, res: any, env: any): Promise<Response>
+  create: async function (body: any, DB: any): Promise<Response>
   {
-console.log(req);
+console.log(body);
     const retObj = {ret: "NG", data: [], message: ''}
     try{
-      if (req) {
+      if (body) {
         const deleteSql = `
         DELETE FROM Plan
-        WHERE date(p_date) = date(datetime('${req.p_date}'))
+        WHERE date(p_date) = date(datetime('${body.p_date}'))
+        AND userId = ${body.userId}
         `;
-        const resulteDelete = await env.DB.prepare(deleteSql).run();
+        console.log(deleteSql);
+        const resulteDelete = await DB.prepare(deleteSql).run();
         //console.log(resulte);
         if(resulteDelete.success !== true) {
           console.error("Error, delete");
@@ -27,12 +29,12 @@ console.log(req);
         INSERT INTO Plan
         (userId, content, p_date)
         VALUES(
-        ${req.userId}, '${req.content}',
-        datetime('${req.p_date}', 'localtime')
+        ${body.userId}, '${body.content}',
+        datetime('${body.p_date}', 'localtime')
         )
         `;
 //console.log(sql);
-        const resulte = await env.DB.prepare(sql).run();
+        const resulte = await DB.prepare(sql).run();
 //console.log(resulte);
         if(resulte.success !== true) {
           console.error("Error, /create");
@@ -40,7 +42,7 @@ console.log(req);
         }
         //id
         const sql_id = "SELECT last_insert_rowid() AS id;";
-        const resultId = await env.DB.prepare(sql_id).all();
+        const resultId = await DB.prepare(sql_id).all();
 //console.log(resultId);
         if(resultId.results.length < 1) {
           console.error("Error, resultId.length < 1");
@@ -48,9 +50,9 @@ console.log(req);
         }
         const item_id = resultId.results[0].id;
 console.log("item_id=", item_id);
-        req.id = item_id;
+        body.id = item_id;
       }            
-      return Response.json({ret: "OK", data: req});
+      return {ret: "OK", data: body};
     } catch (e) {
       console.error(e);
       return Response.json(retObj);
@@ -61,25 +63,25 @@ console.log("item_id=", item_id);
   * @param
   *
   * @return
-  */ 
-  delete: async function (req: any, res: any, env: any): Promise<Response>
+  */
+  delete: async function (body: any, DB: any): Promise<Response>
   {
-console.log(req);
+console.log(body);
     const retObj = {ret: "NG", data: [], message: ''}
     try{
-      if (req) {
+      if (body) {
         const sql = `
-        DELETE FROM Plan WHERE id = ${req.id}
+        DELETE FROM Plan WHERE id = ${body.id}
         `;
 console.log(sql);
-        const resulte = await env.DB.prepare(sql).run();
+        const resulte = await DB.prepare(sql).run();
 //console.log(resulte);
         if(resulte.success !== true) {
           console.error("Error, delete");
           throw new Error('Error , delete');
         }      
       }
-      return Response.json({ret: "OK", data: req});
+      return {ret: "OK", data: body};
     } catch (e) {
       console.error(e);
       return Response.json(retObj);
@@ -91,25 +93,25 @@ console.log(sql);
   *
   * @return
   */ 
-  update: async function (req: any, res: any, env: any): Promise<Response>
+  update: async function (body: any, DB: any): Promise<any>
   {
   //    console.log("#test.update");
-console.log(req);
+console.log(body);
     const retObj = {ret: "NG", data: [], message: ''}
     try{
-      if (req) {
+      if (body) {
         const sql = `
-        UPDATE Plan set content = '${req.content}'
-        WHERE id = ${req.id};        
+        UPDATE Plan set content = '${body.content}'
+        WHERE id = ${body.id};        
         `;
         console.log(sql);
-        const resulte = await env.DB.prepare(sql).run();
+        const resulte = await DB.prepare(sql).run();
         if(resulte.success !== true) {
           console.error("Error, update");
           throw new Error('Error , update');
         }           
       }                
-      return Response.json({ret: "OK", data: req});
+      return {ret: "OK", data: body};
     } catch (e) {
       console.error(e);
       return Response.json(retObj);
@@ -153,33 +155,32 @@ console.log(req);
   *
   * @return
   */ 
-  get_list: async function (req: any, res: any, env: any): Promise<Response>
+  get_list: async function (body, DB): Promise<any>
   {
 //    console.log(req);
     let resulte: any = [];
     const retObj = {ret: "NG", data: [], message: ''}
     try{
-//      let result: any = {};  
-      if (req) {
+      if (body) {
         const sql = `
         SELECT id, userId, p_date, content FROM Plan
         WHERE 
         (
-          p_date >= datetime('${req.start}', 'localtime')
-          AND p_date <= datetime('${req.end}', 'localtime')
+          p_date >= datetime('${body.start}', 'localtime')
+          AND p_date <= datetime('${body.end}', 'localtime')
         )
-        AND userId = ${req.userId}
+        AND userId = ${body.userId}
         ORDER BY p_date ASC
         `;  
 console.log(sql);
-        resulte = await env.DB.prepare(sql).all();
+        resulte = await DB.prepare(sql).all();
 console.log(resulte);
         if(resulte.results.length < 1) {
           console.error("Error, results.length < 1");
           throw new Error('Error , get');
         }              
       }           
-      return Response.json({ret: "OK", data: resulte.results});
+      return resulte.results;
     } catch (e) {
       console.error(e);
       return Response.json(retObj);
