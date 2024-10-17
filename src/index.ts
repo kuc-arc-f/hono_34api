@@ -4,6 +4,7 @@ import { cors } from 'hono/cors'
 import testRouter from './routes/test';
 import todosRouter from './routes/todo';
 import bookMarkRouter from './routes/BookMark';
+import chatRouter from './routes/chat';
 import planRouter from './routes/plan';
 //
 const app = new Hono();
@@ -113,4 +114,28 @@ app.post('/api/plan/update', async (c) => {
   const resulte = await planRouter.update(body, c.env.DB);
   return c.json(resulte);
 });
+//
+app.post('/api/chat/create', async (c) => { 
+  const body = await c.req.json();
+  const resulte = await chatRouter.create(body, c.env.DB);
+  return c.json(resulte);
+});
+app.post('/api/chat/get_list', async (c) => { 
+  const body = await c.req.json();
+  const resulte = await chatRouter.get_list(body, c.env.DB);
+  return c.json(resulte);
+});
+app.post('/api/chat/delete', async (c) => { 
+  const body = await c.req.json();
+  const resulte = await chatRouter.delete(body, c.env.DB);
+  return c.json(resulte);
+});
+/*
+app.post('/api/chat/update', async (c) => { 
+  const body = await c.req.json();
+  const resulte = await chatRouter.update(body, c.env.DB);
+  return c.json(resulte);
+});
+*/
+
 export default app

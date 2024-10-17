@@ -140,3 +140,16 @@ CREATE TABLE "Memo" (
     "content" TEXT,
     "userId" TEXT
 );
+
+DROP TABLE IF EXISTS chat;
+CREATE TABLE chat (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  createdAt TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updatedAt TIMESTAMP(3) NULL,
+  parentId INTEGER,
+  title TEXT NOT NULL,
+  text_post TEXT,
+  sender TEXT,
+  content TEXT,
+  userId    INTEGER  DEFAULT 0 
+);
