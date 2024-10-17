@@ -1,6 +1,6 @@
 ﻿# hono_34api
 
- Version: 0.9.1
+ Version: 0.9.2
 
  Author  : Kouji Nakashima / kuc-arc-f.com
 
@@ -28,6 +28,13 @@ binding = "DB" # i.e. available in your Worker on env.DB
 database_name = ""
 database_id = ""
 ```
+
+***
+### ChangeLog
+* VER_0_9_1 : new
+* VER_0_9_2 : fix
+
+
 ***
 ### blog 
 
