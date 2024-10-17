@@ -1,12 +1,12 @@
 ﻿# hono_34api
 
- Version: 0.9.1
+ Version: 0.9.3
 
  Author  : Kouji Nakashima / kuc-arc-f.com
 
  date    : 2023/12/16
 
- update  : 2024/03/09
+ update  : 2024/10/16
 
 ***
 ### Summary
@@ -28,6 +28,11 @@ binding = "DB" # i.e. available in your Worker on env.DB
 database_name = ""
 database_id = ""
 ```
+***
+### ChangeLog
+* VER_0_9_1 : new
+* VER_0_9_2 : fix
+
 ***
 ### blog 
 
