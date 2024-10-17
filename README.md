@@ -6,7 +6,7 @@
 
  date    : 2023/12/16
 
- update  : 2024/10/16
+ update  : 2024/10/16 
 
 ***
 ### Summary
@@ -32,6 +32,7 @@ database_id = ""
 ### ChangeLog
 * VER_0_9_1 : new
 * VER_0_9_2 : fix
+* VER_0_9_3 : table add
 
 ***
 ### blog 
