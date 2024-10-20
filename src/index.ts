@@ -6,6 +6,7 @@ import todosRouter from './routes/todo';
 import bookMarkRouter from './routes/BookMark';
 import chatRouter from './routes/chat';
 import planRouter from './routes/plan';
+import aiCmsRouter from './routes/ai_cms';
 //
 const app = new Hono();
 app.use("/*", cors());
@@ -137,5 +138,25 @@ app.post('/api/chat/update', async (c) => {
   return c.json(resulte);
 });
 */
+app.post('/api/ai_cms/create', async (c) => { 
+  const body = await c.req.json();
+  const result = await aiCmsRouter.create(body, c.env.DB);
+  return c.json(result);
+});
+app.post('/api/ai_cms/get_list', async (c) => { 
+  const body = await c.req.json();
+  const result = await aiCmsRouter.get_list(body, c.env.DB);
+  return c.json(result);
+});
+app.post('/api/ai_cms/delete', async (c) => { 
+  const body = await c.req.json();
+  const result = await aiCmsRouter.delete(body, c.env.DB);
+  return c.json(result);
+});
+app.post('/api/ai_cms/update', async (c) => { 
+  const body = await c.req.json();
+  const result = await aiCmsRouter.update(body, c.env.DB);
+  return c.json(result);
+});
 
 export default app
