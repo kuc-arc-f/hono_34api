@@ -7,6 +7,7 @@ import bookMarkRouter from './routes/BookMark';
 import chatRouter from './routes/chat';
 import planRouter from './routes/plan';
 import aiCmsRouter from './routes/ai_cms';
+import aiTable1Router from './routes/ai_table1';
 //
 const app = new Hono();
 app.use("/*", cors());
@@ -156,6 +157,27 @@ app.post('/api/ai_cms/delete', async (c) => {
 app.post('/api/ai_cms/update', async (c) => { 
   const body = await c.req.json();
   const result = await aiCmsRouter.update(body, c.env.DB);
+  return c.json(result);
+});
+//ai_table1
+app.post('/api/ai_table1/create', async (c) => { 
+  const body = await c.req.json();
+  const result = await aiTable1Router.create(body, c.env.DB);
+  return c.json(result);
+});
+app.post('/api/ai_table1/get_list', async (c) => { 
+  const body = await c.req.json();
+  const result = await aiTable1Router.get_list(body, c.env.DB);
+  return c.json(result);
+});
+app.post('/api/ai_table1/delete', async (c) => { 
+  const body = await c.req.json();
+  const result = await aiTable1Router.delete(body, c.env.DB);
+  return c.json(result);
+});
+app.post('/api/ai_table1/update', async (c) => { 
+  const body = await c.req.json();
+  const result = await aiTable1Router.update(body, c.env.DB);
   return c.json(result);
 });
 
